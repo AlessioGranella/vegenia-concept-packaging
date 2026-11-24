@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Vegenia · Tre direzioni creative</title>
+<style>
+@font-face { font-family: 'Sora'; font-weight: 500; src: url('font/Sora-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Sora'; font-weight: 600; src: url('font/Sora-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Sora'; font-weight: 700; src: url('font/Sora-Bold.ttf') format('truetype'); }
+
+:root {
+  /* DROP — token dal design system (colors_and_type.css) */
+  --drop-teal: #044972;
+  --drop-orange: #F03F35;
+  --drop-teal-900: #02263C;
+  --drop-teal-100: #E6EDF1;
+  --drop-teal-200: #C8D7E0;
+  --drop-paper: #E3EFFA;
+  --drop-white: #FFFFFF;
+  --drop-ink: #1F2A33;
+  --drop-black: #021222;
+
+  --fg-title: var(--drop-teal);
+  --fg: var(--drop-ink);
+  --accent: var(--drop-orange);
+  --on-dark: var(--drop-paper);
+
+  /* Colori dei pack — campionati dai mockup, sono contenuto del cliente */
+  --h-lilla: #CAA6E9; --h-giallo: #EBDB71; --h-verde: #ABEF83; --h-ink: #01281E;
+  --b-verde: #1B3E3D; --b-lime: #B4CE46;
+  --c-borgogna: #39001C; --c-petrolio: #012B2E; --c-rubino: #4B050B; --c-oro: #A07838; --c-logo: #90B800;
+
+  --m: 80px; /* margine interno 4,1% di 1920 */
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--drop-black); overflow: hidden; }
+body { font-family: 'Sora', system-ui, sans-serif; font-weight: 500; color: var(--fg);
+  -webkit-font-smoothing: antialiased; }
+
+/* ---------------------------------------------------------------- PALCO */
+#palco { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+  transform-origin: 0 0; overflow: hidden; background: var(--drop-white); }
+.slide { position: absolute; inset: 0; opacity: 0; visibility: hidden;
+  transition: opacity .8s var(--ease), visibility 0s linear .8s; background: var(--drop-white); }
+.slide.attiva { opacity: 1; visibility: visible; transition: opacity .8s var(--ease), visibility 0s; z-index: 2; }
+.slide--teal { background: var(--drop-teal); }
+
+/* entrata degli elementi */
+.entra { opacity: 0; transform: translateY(28px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.attiva .entra { opacity: 1; transform: none; }
+.attiva .entra.d1 { transition-delay: .15s; } .attiva .entra.d2 { transition-delay: .3s; }
+.attiva .entra.d3 { transition-delay: .45s; } .attiva .entra.d4 { transition-delay: .6s; }
+.attiva .entra.d5 { transition-delay: .75s; }
+
+/* foto che respira, solo sulla slide attiva */
+.respira { transform: scale(1.06); transition: transform 9s ease-out; }
+.attiva .respira { transform: scale(1); }
+
+/* ---------------------------------------------------------------- TIPOGRAFIA */
+.occhiello { position: relative; padding-top: 18px; font-weight: 600; font-size: 22px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--fg-title); }
+.occhiello::before { content: ''; position: absolute; left: 0; top: 0; width: 56px; height: 3px; background: var(--accent); }
+.chiaro, .chiaro .occhiello, .chiaro h1, .chiaro h2, .chiaro h3, .chiaro p { color: var(--on-dark); }
+h1 { font-weight: 700; font-size: 104px; line-height: 1.02; letter-spacing: -.02em; color: var(--fg-title); }
+h2 { font-weight: 700; font-size: 68px; line-height: 1.08; letter-spacing: -.015em; color: var(--fg-title); }
+h3 { font-weight: 700; font-size: 30px; line-height: 1.2; color: var(--fg-title); }
+p  { font-size: 26px; line-height: 1.5; color: var(--fg); max-width: 36em; }
+.evid { color: var(--accent); }
+.piccolo { font-size: 20px; line-height: 1.5; }
+
+/* ---------------------------------------------------------------- PIEDE */
+.piede { position: absolute; left: var(--m); bottom: 56px; display: flex; align-items: center; gap: 28px;
+  font-size: 17px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6B7C88; z-index: 5; }
+.piede img { height: 38px; display: block; }
+.piede .num { font-variant-numeric: tabular-nums; }
+.chiaro .piede, .piede.chiaro { color: rgba(227,239,250,.75); }
+
+/* ---------------------------------------------------------------- 01 COPERTINA */
+.cop__testo { position: absolute; left: var(--m); top: 96px; width: 760px; }
+.cop__testo p { margin-top: 36px; font-size: 28px; }
+.anello { position: absolute; width: 940px; height: 940px; left: 860px; top: 70px; border-radius: 50%;
+  -webkit-mask: radial-gradient(circle closest-side, transparent 56.5%, #000 calc(56.5% + .5px));
+          mask: radial-gradient(circle closest-side, transparent 56.5%, #000 calc(56.5% + .5px)); }
+.spicchio { position: absolute; inset: 0; overflow: hidden; }
+.spicchio img { position: absolute; height: 104%; translate: -50% -50%; }
+.spicchio--a { clip-path: polygon(50% 50%, 50% -50%, 136.6% 0%, 136.6% 100%); background: var(--c-borgogna); }
+.spicchio--b { clip-path: polygon(50% 50%, 136.6% 100%, 50% 150%, -36.6% 100%); background: var(--b-verde); }
+.spicchio--c { clip-path: polygon(50% 50%, -36.6% 100%, -36.6% 0%, 50% -50%); background: var(--h-lilla); }
+.raggio { position: absolute; left: 50%; top: 50%; width: 12px; height: 50%; margin-left: -6px;
+  background: var(--drop-teal); transform-origin: 50% 0; }
+.foro { position: absolute; left: calc(860px + 470px); top: calc(70px + 470px); translate: -50% -50%;
+  width: 531px; text-align: center; }
+.foro h1 { font-size: 64px; color: var(--on-dark); line-height: 1.08; }
+
+/* ---------------------------------------------------------------- 02 PANORAMICA (3-up) */
+.testa { position: absolute; left: var(--m); top: 96px; right: var(--m); }
+.testa h2 { margin-top: 28px; max-width: 1300px; }
+.tre { position: absolute; left: var(--m); right: var(--m); top: 330px; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 48px; }
+.scheda { border-radius: 28px; overflow: hidden; background: var(--drop-paper);
+  box-shadow: 0 18px 40px -18px rgba(4,73,114,.35); }
+.scheda__foto { height: 360px; overflow: hidden; position: relative; }
+.scheda__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.scheda__corpo { padding: 30px 36px 36px; }
+.scheda__num { font-weight: 600; font-size: 20px; letter-spacing: .08em; color: var(--accent); }
+.scheda h3 { margin-top: 8px; font-size: 38px; }
+.scheda p { margin-top: 10px; font-size: 22px; }
+.scheda--scura { background: var(--drop-teal); }
+.scheda--scura h3, .scheda--scura p { color: var(--on-dark); }
+
+/* ---------------------------------------------------------------- APERTURA DI SEZIONE */
+.apertura { display: grid; grid-template-columns: 760px 1fr; }
+.apertura__campo { position: relative; padding: 96px var(--m); }
+.apertura__num { font-weight: 700; font-size: 220px; line-height: .9; letter-spacing: -.04em; opacity: .9; }
+.apertura__campo h1 { margin-top: 56px; font-size: 96px; }
+.apertura__campo p { margin-top: 28px; font-size: 32px; line-height: 1.35; max-width: 560px; }
+.apertura__foto { position: relative; overflow: hidden; }
+.apertura__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------------------------------------------------------------- CONCEPT (layout A) */
+.concept { display: grid; grid-template-columns: 720px 1fr; gap: 72px; position: absolute;
+  inset: 96px var(--m) 150px var(--m); }
+.concept__testo h2 { margin-top: 28px; font-size: 60px; }
+.concept__voci { margin-top: 48px; display: grid; gap: 34px; }
+.concept__voci h3 { font-size: 24px; letter-spacing: .01em; }
+.concept__voci p { margin-top: 8px; font-size: 22px; line-height: 1.55; }
+.concept__foto { border-radius: 28px; overflow: hidden; position: relative;
+  box-shadow: 0 24px 60px -24px rgba(4,73,114,.45); }
+.concept__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------------------------------------------------------------- COLORE */
+.colore { position: absolute; inset: 96px var(--m) 150px var(--m); display: grid;
+  grid-template-columns: 560px 1fr; gap: 72px; }
+.colore__testo h2 { margin-top: 28px; font-size: 58px; }
+.colore__testo p { margin-top: 28px; font-size: 23px; }
+.accenti { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px 28px; }
+.accento { display: flex; align-items: center; gap: 14px; font-size: 18px; font-weight: 600; color: var(--fg); }
+.accento i { width: 44px; height: 44px; border-radius: 50%; display: block; box-shadow: inset 0 0 0 1px rgba(2,18,34,.12); }
+.accento small { display: block; font-weight: 500; font-size: 15px; letter-spacing: .04em; color: #6B7C88; }
+.colonne { display: grid; gap: 28px; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.colonna { border-radius: 28px; overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 18px 40px -20px rgba(2,18,34,.45); }
+.colonna__foto { flex: 1; position: relative; overflow: hidden; }
+.colonna__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.colonna__campo { height: 230px; padding: 28px 30px; display: flex; flex-direction: column; justify-content: flex-end; }
+.colonna__campo b { font-weight: 700; font-size: 30px; line-height: 1.15; }
+.colonna__campo span { margin-top: 8px; font-size: 18px; font-weight: 600; letter-spacing: .06em; opacity: .8; }
+.campo-scuro { color: var(--drop-paper); }
+.campo-chiaro { color: var(--h-ink); }
+
+/* ---------------------------------------------------------------- SCAFFALE (layout C) */
+.pieno img.sfondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.velo { position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(2,18,34,.86) 0%, rgba(2,18,34,.62) 34%, rgba(2,18,34,0) 62%); }
+.pieno__testo { position: absolute; left: var(--m); top: 96px; width: 700px; }
+.pieno__testo h2 { margin-top: 28px; font-size: 62px; }
+.pieno__testo p { margin-top: 28px; font-size: 25px; }
+
+/* ---------------------------------------------------------------- FRONTE / RETRO */
+.fr { position: absolute; left: var(--m); right: var(--m); top: 260px; bottom: 140px; background: #CFC0B9; border-radius: 28px; overflow: hidden;
+  box-shadow: 0 24px 60px -24px rgba(4,73,114,.45); }
+.fr img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* ---------------------------------------------------------------- CONFRONTO */
+.tabella { position: absolute; left: var(--m); right: var(--m); top: 300px; border-collapse: collapse; width: calc(100% - 160px); }
+.tabella th, .tabella td { text-align: left; vertical-align: top; padding: 17px 24px 17px 0; }
+.tabella thead th { padding-bottom: 20px; border-bottom: 2px solid var(--drop-teal-200); }
+.tabella thead th b { display: block; font-weight: 700; font-size: 32px; color: var(--fg-title); }
+.tabella thead th span { display: block; font-size: 16px; font-weight: 600; letter-spacing: .08em; color: var(--accent); }
+.tabella .strisce { display: flex; gap: 6px; margin-top: 14px; }
+.tabella .strisce i { height: 12px; flex: 1; border-radius: 6px; }
+.tabella tbody th { width: 300px; font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-title); padding-top: 21px; }
+.tabella td { font-size: 22px; line-height: 1.4; color: var(--fg); border-bottom: 1px solid var(--drop-teal-100); width: calc((100% - 300px) / 3); }
+.tabella tbody tr:last-child td, .tabella tbody tr:last-child th { border-bottom: 0; }
+
+/* ---------------------------------------------------------------- MAPPA */
+.mappa-testo { position: absolute; left: var(--m); top: 96px; width: 560px; }
+.mappa-testo h2 { margin-top: 28px; font-size: 58px; }
+.mappa-testo p { margin-top: 28px; font-size: 23px; }
+.mappa { position: absolute; left: 760px; top: 96px; width: 1080px; height: 800px; border-radius: 28px; background: var(--drop-paper); }
+.mappa .asse-x, .mappa .asse-y { position: absolute; background: var(--drop-teal-200); }
+.mappa .asse-x { left: 60px; right: 60px; top: 50%; height: 2px; }
+.mappa .asse-y { top: 60px; bottom: 60px; left: 50%; width: 2px; }
+.mappa .etic { position: absolute; font-size: 17px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-title); }
+.punto { position: absolute; width: 150px; translate: -50% -50%; text-align: center; }
+.punto img { width: 150px; height: 200px; object-fit: cover; border-radius: 18px; display: block;
+  box-shadow: 0 16px 34px -14px rgba(2,18,34,.5); }
+.punto b { display: block; margin-top: 12px; font-weight: 700; font-size: 22px; color: var(--fg-title); white-space: nowrap; }
+.punto span { display: block; font-size: 15px; font-weight: 600; letter-spacing: .08em; color: var(--accent); }
+
+/* ---------------------------------------------------------------- CHIUSURA */
+.chiusura { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.chiusura img { height: 120px; }
+.chiusura p { margin-top: 48px; font-size: 26px; color: var(--on-dark); max-width: none; }
+.goccia { position: absolute; right: -180px; bottom: -220px; width: 905px; opacity: .1; pointer-events: none; }
+
+/* ---------------------------------------------------------------- INTERFACCIA */
+#barra { position: fixed; left: 0; bottom: 0; height: 4px; background: var(--drop-orange); width: 0; z-index: 10;
+  transition: width .6s var(--ease); }
+#aiuto { position: fixed; right: 20px; bottom: 16px; z-index: 10; font: 600 12px/1 'Sora', sans-serif; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(227,239,250,.55); transition: opacity 1s; pointer-events: none; }
+@media print {
+  html, body { overflow: visible; background: #fff; }
+  @page { size: 1920px 1080px; margin: 0; }
+  #palco { position: static; transform: none !important; width: 1920px; height: auto; }
+  .slide { position: relative; width: 1920px; height: 1080px; opacity: 1; visibility: visible; page-break-after: always; overflow: hidden; }
+  .entra { opacity: 1; transform: none; } .respira { transform: none; }
+  #barra, #aiuto { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="palco">
+
+<!-- ============================================================ 01 COPERTINA -->
+<section class="slide slide--teal chiaro" data-titolo="Copertina">
+  <div class="cop__testo">
+    <div class="occhiello entra">Vegenia · Packaging design</div>
+    <p class="entra d1">Tre direzioni creative per la busta delle insalate Vegenia: Mista Fine, Mista + Gusto, Rucola.</p>
+  </div>
+  <div class="anello entra d2">
+    <div class="spicchio spicchio--a"><img class="respira" src="img/c-mistafine.jpg" style="left:80%;top:38%" alt=""></div>
+    <div class="spicchio spicchio--b"><img class="respira" src="img/b-mistagusto.jpg" style="left:50%;top:80%" alt=""></div>
+    <div class="spicchio spicchio--c"><img class="respira" src="img/h-mistafine.jpg" style="left:22%;top:40%" alt=""></div>
+    <div class="raggio" style="transform:rotate(180deg)"></div>
+    <div class="raggio" style="transform:rotate(-60deg)"></div>
+    <div class="raggio" style="transform:rotate(60deg)"></div>
+  </div>
+  <div class="foro entra d3"><h1>Tre letture del <span class="evid">premium</span></h1></div>
+  <div class="piede"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span>Novembre 2026</span></div>
+</section>
+
+<!-- ============================================================ 02 PANORAMICA -->
+<section class="slide" data-titolo="Le tre direzioni">
+  <div class="testa">
+    <div class="occhiello entra">Le tre direzioni</div>
+    <h2 class="entra d1">Stessi testi, stesse referenze. Cambia <span class="evid">chi parla per primo</span> sulla busta.</h2>
+  </div>
+  <div class="tre">
+    <article class="scheda entra d2">
+      <div class="scheda__foto"><img src="img/c-trio.jpg" alt="" style="object-position:50% 50%"></div>
+      <div class="scheda__corpo"><div class="scheda__num">01 · IL PRODOTTO</div><h3>Classic Premium</h3><p>La qualità del prodotto, in primo piano.</p></div>
+    </article>
+    <article class="scheda scheda--scura entra d3">
+      <div class="scheda__foto"><img src="img/b-vetrina.jpg" alt="" style="object-position:50% 50%"></div>
+      <div class="scheda__corpo"><div class="scheda__num">02 · LA MARCA</div><h3>Bold Premium</h3><p>Una marca forte, immediata e riconoscibile.</p></div>
+    </article>
+    <article class="scheda entra d4">
+      <div class="scheda__foto"><img src="img/h-trio.jpg" alt="" style="object-position:50% 45%"></div>
+      <div class="scheda__corpo"><div class="scheda__num">03 · LE PERSONE</div><h3>Human Premium</h3><p>Il valore delle persone, la cura della terra.</p></div>
+    </article>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 01 CLASSIC — APERTURA -->
+<section class="slide apertura chiaro" data-titolo="01 Classic Premium">
+  <div class="apertura__campo" style="background:var(--c-borgogna)">
+    <div class="apertura__num entra" style="color:var(--c-oro)">01</div>
+    <h1 class="entra d1">Classic Premium</h1>
+    <p class="entra d2">La qualità del prodotto, in primo piano.</p>
+    <div class="piede chiaro"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span class="num"></span></div>
+  </div>
+  <div class="apertura__foto"><img class="respira" src="img/c-mistafine.jpg" alt="Busta Mista Fine, direzione Classic Premium" style="object-position:50% 45%"></div>
+</section>
+
+<!-- ============================================================ 01 CLASSIC — CONCEPT -->
+<section class="slide" data-titolo="Classic · concept">
+  <div class="concept">
+    <div class="concept__testo">
+      <div class="occhiello entra">01 · Classic Premium</div>
+      <h2 class="entra d1">La finestra grande mette l’insalata al centro.</h2>
+      <div class="concept__voci">
+        <div class="entra d2"><h3>Concept creativo</h3><p>Una rilettura dei codici della tradizione gastronomica, orientata all’eleganza e alla valorizzazione della qualità del prodotto.</p></div>
+        <div class="entra d3"><h3>Linguaggio visivo</h3><p>Borgogna, verde petrolio e rosso rubino identificano le referenze. Il dettaglio dorato, la tipografia calligrafica e la grande finestra centrale definiscono una composizione ricercata.</p></div>
+        <div class="entra d4"><h3>Identità di marca</h3><p>Il logo protagonista, l’origine sarda e la tracciabilità costruiscono un racconto di provenienza e qualità, mentre la trasparenza valorizza direttamente il contenuto.</p></div>
+      </div>
+    </div>
+    <div class="concept__foto entra d2" style="background:#FAF5CC"><img class="respira" src="img/c-trio.jpg" alt="Le tre referenze Classic Premium" style="object-fit:contain"></div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 01 CLASSIC — COLORE -->
+<section class="slide" data-titolo="Classic · colore">
+  <div class="colore">
+    <div class="colore__testo">
+      <div class="occhiello entra">01 · Uso del colore</div>
+      <h2 class="entra d1">Tre fondi profondi e un filo d’oro.</h2>
+      <p class="entra d2">Ogni referenza ha il suo colore, sempre scuro e saturo come nel mondo del vino e della gastronomia. L’onda dorata separa la marca dal prodotto e il verde del logo richiama le foglie.</p>
+      <div class="accenti entra d3">
+        <div class="accento"><i style="background:var(--c-oro)"></i><div>Oro<small>#A07838 · onda</small></div></div>
+        <div class="accento"><i style="background:var(--c-logo)"></i><div>Verde logo<small>#90B800 · marchio</small></div></div>
+      </div>
+    </div>
+    <div class="colonne">
+      <div class="colonna entra d2"><div class="colonna__foto"><img src="img/c-mistafine.jpg" alt="" style="object-position:50% 45%"></div>
+        <div class="colonna__campo campo-scuro" style="background:var(--c-borgogna)"><b>Borgogna</b><span>MISTA FINE · #39001C</span></div></div>
+      <div class="colonna entra d3"><div class="colonna__foto"><img src="img/c-rucola.jpg" alt="" style="object-position:50% 45%"></div>
+        <div class="colonna__campo campo-scuro" style="background:var(--c-petrolio)"><b>Verde petrolio</b><span>RUCOLA · #012B2E</span></div></div>
+      <div class="colonna entra d4"><div class="colonna__foto"><img src="img/c-mistagusto.jpg" alt="" style="object-position:50% 45%"></div>
+        <div class="colonna__campo campo-scuro" style="background:var(--c-rubino)"><b>Rosso rubino</b><span>MISTA + GUSTO · #4B050B</span></div></div>
+    </div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 01 CLASSIC — SCAFFALE -->
+<section class="slide pieno chiaro" data-titolo="Classic · scaffale">
+  <img class="sfondo respira" src="img/c-scaffale.jpg" alt="Le buste Classic Premium sullo scaffale refrigerato" style="object-position:50% 50%">
+  <div class="velo"></div>
+  <div class="pieno__testo">
+    <div class="occhiello entra">01 · A scaffale</div>
+    <h2 class="entra d1">L’insalata si vede più di tutto il resto.</h2>
+    <p class="entra d2">I fondi scuri incorniciano la finestra e fanno risaltare il verde e il rosso delle foglie. È la busta che più somiglia a un prodotto di gastronomia.</p>
+  </div>
+  <div class="piede chiaro"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 02 BOLD — APERTURA -->
+<section class="slide apertura chiaro" data-titolo="02 Bold Premium">
+  <div class="apertura__campo" style="background:var(--b-verde)">
+    <div class="apertura__num entra" style="color:var(--b-lime)">02</div>
+    <h1 class="entra d1">Bold Premium</h1>
+    <p class="entra d2">Una marca forte, immediata e riconoscibile.</p>
+    <div class="piede chiaro"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span class="num"></span></div>
+  </div>
+  <div class="apertura__foto"><img class="respira" src="img/b-mistagusto.jpg" alt="Busta Mista + Gusto, direzione Bold Premium" style="object-position:50% 45%"></div>
+</section>
+
+<!-- ============================================================ 02 BOLD — CONCEPT -->
+<section class="slide" data-titolo="Bold · concept">
+  <div class="concept">
+    <div class="concept__testo">
+      <div class="occhiello entra">02 · Bold Premium</div>
+      <h2 class="entra d1">Il marchio prende tutto lo spazio.</h2>
+      <div class="concept__voci">
+        <div class="entra d2"><h3>Concept creativo</h3><p>Una lettura espressiva del premium, fondata sulla presenza del marchio e sulla chiarezza della comunicazione.</p></div>
+        <div class="entra d3"><h3>Linguaggio visivo</h3><p>Verde profondo e lime, lettering organico di grande formato e finestra laterale. La fascia orizzontale mette in evidenza la filiera e la collaborazione con gli agricoltori.</p></div>
+        <div class="entra d4"><h3>Identità di marca</h3><p>Un sistema compatto e coerente che esprime energia, freschezza e autorevolezza attraverso un codice cromatico istituzionale.</p></div>
+      </div>
+    </div>
+    <div class="concept__foto entra d2"><img class="respira" src="img/b-vetrina.jpg" alt="Le buste Bold Premium in vetrina" style="object-position:50% 50%"></div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 02 BOLD — COLORE -->
+<section class="slide" data-titolo="Bold · colore">
+  <div class="colore">
+    <div class="colore__testo">
+      <div class="occhiello entra">02 · Uso del colore</div>
+      <h2 class="entra d1">Un solo codice per tutta la linea.</h2>
+      <p class="entra d2">Il verde profondo è il fondo di ogni referenza e il lime porta nome del prodotto, payoff e fascia della filiera. A distinguere le insalate sono il lettering e quello che si vede dalla finestra.</p>
+      <div class="accenti entra d3">
+        <div class="accento"><i style="background:var(--b-verde)"></i><div>Verde profondo<small>#1B3E3D · fondo</small></div></div>
+        <div class="accento"><i style="background:var(--b-lime)"></i><div>Lime<small>#B4CE46 · nome e fascia</small></div></div>
+      </div>
+    </div>
+    <div class="colonne">
+      <div class="colonna entra d2"><div class="colonna__foto"><img src="img/b-rucola-fr.jpg" alt="" style="object-position:22% 50%"></div>
+        <div class="colonna__campo campo-scuro" style="background:var(--b-verde)"><b>Verde profondo</b><span>RUCOLA · #1B3E3D</span></div></div>
+      <div class="colonna entra d3"><div class="colonna__foto"><img src="img/b-mistagusto.jpg" alt="" style="object-position:40% 45%"></div>
+        <div class="colonna__campo campo-scuro" style="background:var(--b-verde)"><b>Verde profondo</b><span>MISTA + GUSTO · #1B3E3D</span></div></div>
+      <div class="colonna entra d4"><div class="colonna__foto" style="background:var(--b-verde)"><img src="img/b-vetrina.jpg" alt="" style="object-position:38% 50%"></div>
+        <div class="colonna__campo" style="background:var(--b-lime);color:var(--b-verde)"><b>Lime</b><span>FASCIA FILIERA · #B4CE46</span></div></div>
+    </div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 02 BOLD — FRONTE/RETRO -->
+<section class="slide" data-titolo="Bold · fronte e retro">
+  <div class="testa">
+    <div class="occhiello entra">02 · Fronte e retro</div>
+    <h2 class="entra d1">Il retro prosegue lo stesso sistema.</h2>
+  </div>
+  <div class="fr entra d2"><img class="respira" src="img/b-mista-fr.jpg" alt="Mista + Gusto Bold Premium, fronte e retro"></div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 02 BOLD — SCAFFALE -->
+<section class="slide pieno chiaro" data-titolo="Bold · scaffale">
+  <img class="sfondo respira" src="img/b-scaffale.jpg" alt="Le buste Bold Premium nel banco frigo" style="object-position:50% 55%">
+  <div class="velo"></div>
+  <div class="pieno__testo">
+    <div class="occhiello entra">02 · A scaffale</div>
+    <h2 class="entra d1">L’unico fondo scuro del banco frigo.</h2>
+    <p class="entra d2">In mezzo a buste chiare e trasparenti, il verde profondo si legge come una macchia unica anche da lontano. Più facce affiancate costruiscono un blocco di marca.</p>
+  </div>
+  <div class="piede chiaro"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 03 HUMAN — APERTURA -->
+<section class="slide apertura" data-titolo="03 Human Premium">
+  <div class="apertura__campo" style="background:var(--h-lilla)">
+    <div class="apertura__num entra" style="color:var(--drop-teal)">03</div>
+    <h1 class="entra d1">Human Premium</h1>
+    <p class="entra d2" style="color:var(--drop-teal)">Il valore delle persone, la cura della terra.</p>
+    <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+  </div>
+  <div class="apertura__foto"><img class="respira" src="img/h-mistafine.jpg" alt="Busta Mista Fine, direzione Human Premium" style="object-position:50% 50%"></div>
+</section>
+
+<!-- ============================================================ 03 HUMAN — CONCEPT -->
+<section class="slide" data-titolo="Human · concept">
+  <div class="concept">
+    <div class="concept__testo">
+      <div class="occhiello entra">03 · Human Premium</div>
+      <h2 class="entra d1">I gesti della coltivazione raccontano la cura.</h2>
+      <div class="concept__voci">
+        <div class="entra d2"><h3>Concept creativo</h3><p>Un’identità premium contemporanea che racconta il legame tra prodotto, persone e territorio. I gesti della coltivazione diventano espressione della cura e del valore del lavoro agricolo.</p></div>
+        <div class="entra d3"><h3>Linguaggio visivo</h3><p>Palette luminosa differenziata per referenza, tipografia condensata e illustrazioni monocromatiche. La fascia centrale dialoga con le finestre laterali e con la freschezza delle foglie.</p></div>
+        <div class="entra d4"><h3>Identità di marca</h3><p>Un universo illustrativo originale, da sviluppare a partire dai personaggi provvisori dei mockup, capace di raccontare la filiera sarda anche oltre il packaging.</p></div>
+      </div>
+    </div>
+    <div class="concept__foto entra d2" style="background:#E0BEAC"><img class="respira" src="img/h-trio.jpg" alt="Le tre referenze Human Premium" style="object-fit:contain"></div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 03 HUMAN — COLORE -->
+<section class="slide" data-titolo="Human · colore">
+  <div class="colore">
+    <div class="colore__testo">
+      <div class="occhiello entra">03 · Uso del colore</div>
+      <h2 class="entra d1">Un colore per ogni referenza.</h2>
+      <p class="entra d2">Tre fondi pastello, luminosi e piatti, distinguono le insalate a colpo d’occhio. Il disegno e i testi restano in un solo verde scurissimo: la famiglia si riconosce dalla costruzione, la referenza dal colore.</p>
+      <div class="accenti entra d3">
+        <div class="accento"><i style="background:var(--h-ink)"></i><div>Inchiostro unico<small>#01281E · illustrazioni e testi</small></div></div>
+      </div>
+    </div>
+    <div class="colonne">
+      <div class="colonna entra d2"><div class="colonna__foto"><img src="img/h-mistafine.jpg" alt="" style="object-position:50% 40%"></div>
+        <div class="colonna__campo campo-chiaro" style="background:var(--h-lilla)"><b>Lilla</b><span>MISTA FINE · #CAA6E9</span></div></div>
+      <div class="colonna entra d3"><div class="colonna__foto"><img src="img/h-mistagusto.jpg" alt="" style="object-position:50% 40%"></div>
+        <div class="colonna__campo campo-chiaro" style="background:var(--h-giallo)"><b>Giallo</b><span>MISTA + GUSTO · #EBDB71</span></div></div>
+      <div class="colonna entra d4"><div class="colonna__foto"><img src="img/h-rucola.jpg" alt="" style="object-position:50% 40%"></div>
+        <div class="colonna__campo campo-chiaro" style="background:var(--h-verde)"><b>Verde chiaro</b><span>RUCOLA · #ABEF83</span></div></div>
+    </div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ 03 HUMAN — SCAFFALE -->
+<section class="slide pieno chiaro" data-titolo="Human · scaffale">
+  <img class="sfondo respira" src="img/h-scaffale.jpg" alt="Le buste Human Premium sullo scaffale refrigerato" style="object-position:50% 50%">
+  <div class="velo"></div>
+  <div class="pieno__testo">
+    <div class="occhiello entra">03 · A scaffale</div>
+    <h2 class="entra d1">Un blocco di colore tra le buste bianche.</h2>
+    <p class="entra d2">Accanto alla concorrenza, quasi tutta su fondo bianco con marchi rossi e gialli, i tre pastello formano una fascia compatta. Le persone disegnate sono l’unico volto umano dello scaffale.</p>
+  </div>
+  <div class="piede chiaro"><img src="brand/drop-bianco-arancio.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ CONFRONTO -->
+<section class="slide" data-titolo="Confronto">
+  <div class="testa">
+    <div class="occhiello entra">Le differenze</div>
+    <h2 class="entra d1">Tre direzioni a confronto.</h2>
+  </div>
+  <table class="tabella entra d2">
+    <thead><tr><th></th>
+      <th><span>01</span><b>Classic Premium</b><div class="strisce"><i style="background:var(--c-borgogna)"></i><i style="background:var(--c-petrolio)"></i><i style="background:var(--c-rubino)"></i><i style="background:var(--c-oro);flex:.4"></i></div></th>
+      <th><span>02</span><b>Bold Premium</b><div class="strisce"><i style="background:var(--b-verde);flex:3"></i><i style="background:var(--b-lime)"></i></div></th>
+      <th><span>03</span><b>Human Premium</b><div class="strisce"><i style="background:var(--h-lilla)"></i><i style="background:var(--h-giallo)"></i><i style="background:var(--h-verde)"></i></div></th>
+    </tr></thead>
+    <tbody>
+      <tr><th>Il premium è</th><td>L’eleganza della tradizione gastronomica</td><td>La presenza e l’autorevolezza della marca</td><td>La cura e il valore del lavoro agricolo</td></tr>
+      <tr><th>Protagonista</th><td>Il prodotto, attraverso la finestra</td><td>Il marchio e il nome del prodotto</td><td>Le persone e i gesti della coltivazione</td></tr>
+      <tr><th>Colore</th><td>Borgogna, verde petrolio e rubino, con dettaglio oro</td><td>Verde profondo e lime, uguali per tutta la linea</td><td>Pastello luminoso, uno per referenza</td></tr>
+      <tr><th>Tipografia</th><td>Calligrafica</td><td>Lettering organico di grande formato</td><td>Condensata</td></tr>
+      <tr><th>Finestra</th><td>Grande finestra centrale</td><td>Una finestra laterale</td><td>Due finestre laterali ai lati della fascia</td></tr>
+      <tr><th>Segno distintivo</th><td>Onda dorata tra marca e prodotto</td><td>Fascia lime su filiera e agricoltori</td><td>Illustrazioni monocromatiche dei personaggi</td></tr>
+    </tbody>
+  </table>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ POSIZIONAMENTO -->
+<section class="slide" data-titolo="Posizionamento">
+  <div class="mappa-testo">
+    <div class="occhiello entra">Posizionamento</div>
+    <h2 class="entra d1">Dove si colloca ciascuna direzione.</h2>
+    <p class="entra d2">Le tre buste sono tutte premium, ma lo dicono con codici diversi: più classici o più contemporanei, con più spazio al prodotto o alla grafica.</p>
+  </div>
+  <div class="mappa entra d2">
+    <div class="asse-x"></div><div class="asse-y"></div>
+    <div class="etic" style="left:60px;top:calc(50% + 16px)">Codici classici</div>
+    <div class="etic" style="right:60px;top:calc(50% + 16px)">Codici contemporanei</div>
+    <div class="etic" style="left:calc(50% + 18px);top:60px">Più spazio alla grafica</div>
+    <div class="etic" style="left:calc(50% + 18px);bottom:60px">Più spazio al prodotto</div>
+    <div class="punto entra d3" style="left:22%;top:78%"><img src="img/c-mistafine.jpg" alt=""><span>01</span><b>Classic Premium</b></div>
+    <div class="punto entra d4" style="left:63%;top:28%"><img src="img/b-mistagusto.jpg" alt=""><span>02</span><b>Bold Premium</b></div>
+    <div class="punto entra d5" style="left:84%;top:72%"><img src="img/h-mistafine.jpg" alt=""><span>03</span><b>Human Premium</b></div>
+  </div>
+  <div class="piede"><img src="brand/drop.svg" alt="DROP"><span class="num"></span></div>
+</section>
+
+<!-- ============================================================ CHIUSURA -->
+<section class="slide slide--teal chiaro" data-titolo="Chiusura">
+  <img class="goccia" src="brand/goccia-bianco.svg" alt="">
+  <div class="chiusura">
+    <img class="entra" src="brand/drop-bianco-arancio.svg" alt="DROP">
+    <p class="entra d1">digitaldrop.eu</p>
+  </div>
+</section>
+
+</div>
+<div id="barra"></div>
+<div id="aiuto">← → per scorrere · F schermo intero</div>
+
+<script>
+(() => {
+  const palco = document.getElementById('palco');
+  const slides = [...document.querySelectorAll('.slide')];
+  const barra = document.getElementById('barra');
+  const tot = slides.length;
+  let i = 0;
+
+  slides.forEach((s, n) => s.querySelectorAll('.num').forEach(el =>
+    el.textContent = String(n + 1).padStart(2, '0') + ' / ' + String(tot).padStart(2, '0')));
+
+  function scala() {
+    const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+    palco.style.transform = `scale(${k}) translate(-50%, -50%)`;
+  }
+  function vai(n) {
+    n = Math.max(0, Math.min(tot - 1, n));
+    slides[i].classList.remove('attiva');
+    i = n;
+    slides[i].classList.add('attiva');
+    barra.style.width = ((i + 1) / tot * 100) + '%';
+    history.replaceState(null, '', '#' + (i + 1));
+    document.title = 'Vegenia · ' + slides[i].dataset.titolo;
+  }
+  addEventListener('resize', scala); scala();
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); vai(i + 1); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); vai(i - 1); }
+    else if (e.key === 'Home') vai(0);
+    else if (e.key === 'End') vai(tot - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+    }
+  });
+  addEventListener('click', e => vai(e.clientX > innerWidth / 3 ? i + 1 : i - 1));
+  let x0 = null;
+  addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  addEventListener('touchend', e => {
+    if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) vai(dx < 0 ? i + 1 : i - 1); x0 = null;
+  });
+  setTimeout(() => document.getElementById('aiuto').style.opacity = 0, 5000);
+  vai((parseInt(location.hash.slice(1)) || 1) - 1);
+})();
+</script>
+</body>
+</html>
